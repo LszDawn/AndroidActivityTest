@@ -1,7 +1,11 @@
 package com.example.lsz.activitytest;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +26,33 @@ public class FirstActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //静态方法makeText创建一个Toast对象，再调用show方法
+                /*//静态方法makeText创建一个Toast对象，再调用show方法
                 Toast.makeText(FirstActivity.this, "hey man", Toast.LENGTH_SHORT).show();
+                //活动的销毁
+                // finish();*/
+
+                //显式Intent：点击按钮启动目标活动,参数1上下文，参数2目标活动。即在FirstActivity的基础上打开SecondActivity
+                Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
+                //向下一个活动传递数据
+                intent.putExtra("data", "你好呀！第二个活动！");
+
+                //返回数据给上一个活动：SecondActivity再传回来
+                Intent intent4 = new Intent(FirstActivity.this, SecondActivity.class);
+                startActivityForResult(intent4, 1);
+
+                //隐式Intent,一个Intent可以指定多个category,只能指定一个action
+                Intent intent1 = new Intent("com.example.lsz.activitytest.ACTION_START");
+                intent1.addCategory("com.example.lsz.activitytest.MY_CATEGORY");
+
+                //利用隐式Intent调用系统浏览器打开网页
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);//ACTION_VIEW是系统内置的动作
+                //setData指定当前intent正在操作的数据，通常以字符串的形式传入到Uri.parse方法中
+                intent2.setData(Uri.parse("http://www.baidu.com"));
+
+                //隐式Intent拨打电话
+                Intent intent3 = new Intent(Intent.ACTION_DIAL);//ACTION_DIAL打电话
+                intent3.setData(Uri.parse("tel:10086"));
+                startActivity(intent);
             }
         });
     }
@@ -51,5 +80,18 @@ public class FirstActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    //重写onActivityResult方法得到SecondActivity返回的数据
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String returnData = data.getStringExtra("data_res");
+                    Log.d("FirstActivity", returnData);
+                }
+                break;
+        }
     }
 }

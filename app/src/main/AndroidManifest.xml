@@ -9,11 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- 任何活动都必须在AndroidManifest.xml中注册，创建活动后AndroidStudio会自动注册 -->
         <activity android:name=".FirstActivity">
-            <!--添加主活动以启动程序-->
+
+            <!-- 添加主活动以启动程序 -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="android.intent.category.LAUNCHER"></category>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SecondActivity">
+
+            <!-- 隐式Intent，指定SecondActivity能响应的action和category -->
+            <intent-filter>
+                <action android:name="com.example.lsz.activitytest.ACTION_START" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.lsz.activitytest.MY_CATEGORY" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ThirdActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--ThirdActivity能响应的Intent必须是http协议的数据-->
+                <data android:scheme="http" />
             </intent-filter>
         </activity>
     </application>

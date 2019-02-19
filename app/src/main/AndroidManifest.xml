@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
 
         <!-- 任何活动都必须在AndroidManifest.xml中注册，创建活动后AndroidStudio会自动注册 -->
-        <activity android:name=".FirstActivity">
+        <activity android:name=".FirstActivity"
+                  android:launchMode="singleTask">
 
             <!-- 添加主活动以启动程序 -->
             <intent-filter>

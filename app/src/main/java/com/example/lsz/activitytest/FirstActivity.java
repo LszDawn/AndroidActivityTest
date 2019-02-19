@@ -12,11 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class FirstActivity extends AppCompatActivity {
+public class FirstActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //记录活动启动的standard模式
+        Log.d("FirstActivity", this.toString());
         //给当前活动加载一个布局
         setContentView(R.layout.first_layout);
         //弹出toast
@@ -52,7 +54,10 @@ public class FirstActivity extends AppCompatActivity {
                 //隐式Intent拨打电话
                 Intent intent3 = new Intent(Intent.ACTION_DIAL);//ACTION_DIAL打电话
                 intent3.setData(Uri.parse("tel:10086"));
-                startActivity(intent);
+
+                //记录活动启动的standard模式
+                Intent intent5 = new Intent(FirstActivity.this, SecondActivity.class);
+                startActivity(intent5);
             }
         });
     }
@@ -93,5 +98,13 @@ public class FirstActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    //测试singleTask模式
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("FirstActivity", "First,Restart");
     }
 }
